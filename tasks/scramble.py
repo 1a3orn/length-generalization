@@ -48,8 +48,11 @@ class Scramble(AbstractTask):
             random_vars = new_vars
 
         # Generate print statements
-        rand_var = random_vars[randint(0, len(random_vars) - 1)]
-        print_code = f"{rand_var}#{assignments[rand_var]}"
+        var_index = randint(0, len(random_vars) - 1)
+        rand_var = random_vars[var_index]
+        print_code_1 = f"{rand_var}#{assignments[rand_var]}"
+        print_code_2 = f"{random_vars[1 - var_index]}#{assignments[1 - var_index]}"
+        print_code = sep.join([print_code_1, print_code_2])
 
         return f"S{initial_code}{sep}{reassign_code}{print_code}E"
     
