@@ -45,6 +45,10 @@ def train(task_str: str, model_str: str, args: argparse.Namespace):
                 torch.concat([torch.tensor([0]).to(args.device), y], dim=0)
                 )[non_zero_indices].view(-1))
             )
+            print("res: ", task.decode((
+                torch.concat([torch.tensor([0]).to(args.device), y], dim=0)
+                )[non_zero_indices].view(-1))
+            )
             print("res: ", task.decode(y[non_zero_indices].view(-1)))
         # sum loss_val
         loss_val = loss_val.sum() / y_mask.sum()
