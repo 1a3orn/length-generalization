@@ -33,12 +33,12 @@ def train(task_str: str, model_str: str, args: argparse.Namespace):
 
         # Flatten the tensors to 2D for loss calculation
         # Assuming y is a class index for each time step (not one-hot encoded)
-        filtered_y = filtered_y.view(-1)  # Shape becomes [B*T]
-        filtered_result = filtered_result.view(-1, filtered_result.size(-1))  # Shape becomes [B*T, C]
+        y = y.view(-1)  # Shape becomes [B*T]
+        result = result.view(-1, result.size(-1))  # Shape becomes [B*T, C]
 
         # Select only the non-zero entries (i.e., where y_mask was 1)
         non_zero_indices = y_mask.view(-1).nonzero().squeeze()  # Get indices of non-zero entries
-        loss_val = loss(filtered_result[non_zero_indices], filtered_y[non_zero_indices].long())
+        loss_val = loss(result[non_zero_indices], y[non_zero_indices].long())
 
         loss_val.backward()
 
