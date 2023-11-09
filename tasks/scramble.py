@@ -52,7 +52,7 @@ class Scramble(AbstractTask):
         rand_var = random_vars[var_index]
         rv = rand_var
         rv_ass = assignments[rv]
-        print_code = f"{rv}#{rv_ass}{rv_ass}{rv_ass}{rv_ass}"
+        print_code = f"{rv}#{rv_ass}"
 
         return f"S{initial_code}{sep}{reassign_code}{print_code}E"
     
