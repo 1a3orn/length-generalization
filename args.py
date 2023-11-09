@@ -62,7 +62,7 @@ parser.add_argument('--train_max_steps', type=int, default=25000)
 parser.add_argument('--train_batch_size', type=int, default=64)
 parser.add_argument("--train_acc_stop", type=float, default=0.999)
 parser.add_argument("--train_log_every", type=int, default=250)
-parser.add_argument("--train_lr", type=float, default=0.001)
+parser.add_argument("--train_lr", type=float, default=0.0005)
 
 def get_args():
     result = parser.parse_args()
