@@ -16,12 +16,12 @@ def train(task_str: str, model_str: str, args: argparse.Namespace):
         'vocab_size': task.vocab_size(),
         'ctx_len': args.train_ctx_len,
     }).to(args.device)
-    loss = torch.nn.CrossEntropyLoss()
+    loss = torch.nn.CrossEntropyLoss(reduction='none')
     optimizer = torch.optim.Adam(model.parameters(), lr=args.train_lr)
     
     steps = 0
     while steps < args.train_max_steps:
-        x, y = task.batch({
+        x, y, y_mask = task.batch({
             'batch_size': args.train_batch_size,
             'ctx_len': args.train_ctx_len,
             'device': args.device,
@@ -31,6 +31,8 @@ def train(task_str: str, model_str: str, args: argparse.Namespace):
 
         result_flat = result.view(-1, result.size(-1))
         loss_val = loss(result_flat, y.reshape(-1).long())
+        mask_flat = y_mask.reshape(-1).float()
+        loss_val = (loss_val * mask_flat).sum() / mask_flat.sum()
         loss_val.backward()
 
         optimizer.step()

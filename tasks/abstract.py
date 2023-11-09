@@ -25,16 +25,23 @@ class AbstractTask:
 
     def one_seq(self, ctx_len: int, extend=0) -> str:
         res = ""
+        mask = []
         while len(res) < ctx_len:
-            res += self.inner(extend=extend)[0]
-        return self.encode(res[:ctx_len])
+            strg, start, end = self.inner(extend=extend)
+            res += strg
+            mask += [0] * start + [1] * (end - start)
+        return self.encode(res[:ctx_len]), mask[:ctx_len]
     
     def batch(self, args: dict, extend=0):
-        base = torch.tensor([
-            self.one_seq(args['ctx_len'] + 1, extend=extend)
-            for _ in range(args['batch_size'])
-        ], device=args['device']).int()
-        return base[:,:-1], base[:,1:]
+        base = []
+        mask = []
+        for _ in range(args['batch_size']):
+            res, mask = self.one_seq(args['ctx_len'] + 1, extend=extend)
+            base.append(res)
+            mask.append(mask)
+        base = torch.tensor(base, device=args['device']).int()
+        mask = torch.tensor(mask, device=args['device']).int()
+        return base[:,:-1], base[:,1:], mask[:,1:]
     
     def acc(self, extend=0):
         strg, start, end = self.inner(extend=extend)
