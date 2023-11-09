@@ -38,7 +38,7 @@ def train(task_str: str, model_str: str, args: argparse.Namespace):
 
         # Select only the non-zero entries (i.e., where y_mask was 1)
         non_zero_indices = y_mask.reshape(-1).nonzero().squeeze()  # Get indices of non-zero entries
-        loss_val = loss(result[non_zero_indices], y[non_zero_indices].long()
+        loss_val = loss(result[non_zero_indices], y[non_zero_indices].long())
         # sum loss_val
         loss_val = loss_val.sum() / y_mask.sum()
 
