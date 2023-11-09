@@ -37,6 +37,8 @@ def train(task_str: str, model_str: str, args: argparse.Namespace):
         optimizer.zero_grad()
 
         start, end = task.acc(extend=0)
+        start = start.to(args.device)
+        end = end.to(args.device)
         gen = model.generate(start, len(end.view(-1)))
         train_acc = (gen == end).float().min().item()
 
