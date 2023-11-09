@@ -22,7 +22,7 @@ class Scramble(AbstractTask):
             return to_peel.pop()
         
         def rs():
-            return "".join(["#" for _ in range(randint(0, 1))])
+            return "".join(["#" for _ in range(randint(0, 2))])
 
         random_vars = [peel() for _ in range(leng)]
         assignments = {var: str(randint(1, 9)) for var in random_vars}
