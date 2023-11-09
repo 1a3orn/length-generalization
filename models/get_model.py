@@ -34,6 +34,7 @@ def get_model(config: dict) -> object:
         Karp.vocab_size = config['vocab_size']
         n_layer = int(config['model_name'].split("_")[-1])
         Karp.n_layer = n_layer
+        print("Karp Rot", Karp.n_layer)
         return KarpathyTransformerRot(Karp)
 
     if config['model_name'].startswith("trans_karp_"):
@@ -41,6 +42,7 @@ def get_model(config: dict) -> object:
         Karp.vocab_size = config['vocab_size']
         n_layer = int(config['model_name'].split("_")[-1])
         Karp.n_layer = n_layer
+        print("Karp", Karp.n_layer)
         return KarpathyTransformer(Karp)
 
     else:

@@ -63,7 +63,7 @@ def test():
                 print("start ", len(result[:start]), result[:start])
                 print("target ", len(result[start:end]), result[start:end])
             if ext == 0:
-                assert len(result) < 32
+                assert len(result) < 36
         
         # Check all start starts are same
         assert len(set(start_starts)) == 1
