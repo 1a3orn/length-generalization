@@ -27,9 +27,10 @@ class AbstractTask:
         res = ""
         mask = []
         while len(res) < ctx_len:
-            strg, start, end = self.inner(extend=extend)
+            strg, start, ln = self.inner(extend=extend)
             res += strg
-            mask += [0] * start + [1] * (end - start)
+            total_leng = len(strg)
+            mask += [0] * start + [1] * ln + [0] * (total_leng - start - ln)
         return self.encode(res[:ctx_len]), mask[:ctx_len]
     
     def batch(self, args: dict, extend=0):

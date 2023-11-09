@@ -61,4 +61,4 @@ class Scramble(AbstractTask):
         leng = self.shuffles_base
         strng = self.at_len(leng)
         index = strng.index('#') + 1
-        return strng, index, len(strng)
+        return strng, index, 1 
