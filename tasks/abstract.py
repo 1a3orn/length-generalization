@@ -47,8 +47,8 @@ class AbstractTask:
         return base[:,:-1], base[:,1:], mask[:,1:]
     
     def acc(self, extend=0):
-        strg, start, end = self.inner(extend=extend)
+        strg, start, leng_answer = self.inner(extend=extend)
         strg_start = torch.tensor(self.encode(strg[:start])).unsqueeze(0)
-        strg_end = torch.tensor(self.encode(strg[start:end])).unsqueeze(0)
+        strg_end = torch.tensor(self.encode(strg[start:start+leng_answer])).unsqueeze(0)
         return strg_start, strg_end
  
