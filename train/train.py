@@ -40,7 +40,8 @@ def train(task_str: str, model_str: str, args: argparse.Namespace):
         non_zero_indices = y_mask.reshape(-1).nonzero().squeeze()  # Get indices of non-zero entries
         loss_val = loss(result[non_zero_indices], y[non_zero_indices].long())
         
-        print(task.decode(y[non_zero_indices].view(-1)))
+        if steps % args.train_log_every == 0:
+            print(task.decode(y[non_zero_indices].view(-1)))
         # sum loss_val
         loss_val = loss_val.sum() / y_mask.sum()
 
