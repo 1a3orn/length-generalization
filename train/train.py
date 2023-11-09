@@ -42,7 +42,7 @@ def train(task_str: str, model_str: str, args: argparse.Namespace):
         
         if steps % args.train_log_every == 0:
             print("res: ", task.decode((
-                torch.concat(y, torch.tensor([0]), dim=0)
+                torch.concat([y, torch.tensor([0])], dim=0)
                 )[non_zero_indices].view(-1))
             )
             print("res: ", task.decode(y[non_zero_indices].view(-1)))
