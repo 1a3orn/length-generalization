@@ -68,7 +68,7 @@ def train(task_str: str, model_str: str, args: argparse.Namespace):
             print("End: ", d(end.view(-1)))
             print("Gen: ", d(gen.view(-1)))
         
-        if av_acc is not None and av_acc > args.train_acc_stop:
+        if av_acc is not None and av_acc > args.train_acc_stop and steps > 1000:
             print(f"Reached {args.train_acc_stop} accuracy, stopping...")
             break
 
