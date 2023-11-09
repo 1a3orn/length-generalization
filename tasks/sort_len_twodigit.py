@@ -20,7 +20,7 @@ class SortLenTwodigit(AbstractTask):
         start = 2
         end = self.leng
         if extend != 0: 
-            start = self.leng + extend - 1
+            start = self.leng + extend
             end = self.leng + extend
         result = self.seq(randint(start, end))
         index = result.index('e') + 1

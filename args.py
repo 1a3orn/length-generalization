@@ -35,9 +35,12 @@ parser.add_argument(
 )
 
 MODELS = [
-    "trans_karp_sm",
-    "trans_karp_md",
-    "trans_karp_lg",
+    "trans_karp_1",
+    "trans_karp_2",
+    "trans_karp_3",
+    "trans_karp_4",
+    "trans_karp_5",
+    "trans_karp_6",
     "trans_karp_sm_rot",
     "trans_karp_md_rot",
     "trans_karp_lg_rot",

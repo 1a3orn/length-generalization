@@ -20,7 +20,7 @@ class SortLen(AbstractTask):
         start = 2
         end = self.ttb
         if extend != 0: 
-            start = self.ttb + extend - 1
+            start = self.ttb + extend
             end = self.ttb + extend
         result = self.at_len(randint(start, end))
         index = result.index('e') + 1

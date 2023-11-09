@@ -61,7 +61,7 @@ class BalanceParens(AbstractTask):
         start = 2
         end = self.ttb
         if extend != 0 and extend is not None:
-            start = self.ttb
+            start = self.ttb + extend
             end = self.ttb + extend
         result = self.at_len(randint(start, end))
         index = result.index('.') + 1

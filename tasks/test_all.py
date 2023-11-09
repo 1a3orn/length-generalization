@@ -21,12 +21,6 @@ tasks = [
     "copy_len_rep",
     "copy_len_unique",
     "balance_parens",
-    "scramble_0",
-    "scramble_1",
-    "scramble_2",
-
-    "parity_sum",
-    "parity_count",
 
     "count",
     "mode",
@@ -35,6 +29,12 @@ tasks = [
     "sort_len",
     "sort_len_twodigit",
     "sort_missing",
+    "scramble_0",
+    "scramble_1",
+    "scramble_2",
+
+    "parity_sum",
+    "parity_count",
 ]
 
 def test():
@@ -57,11 +57,11 @@ def test():
             start_starts.append(result[0])
             start_ends.append(result[:start][-1])
             end_ends.append(result[start:end][-1])
-            if i == 0:
+            if i == 0 or True:
                 print(f"For extend = {ext}")
                 print("total ", result)
-                print("start ", result[:start])
-                print("target ", result[start:end])
+                print("start ", len(result[:start]), result[:start])
+                print("target ", len(result[start:end]), result[start:end])
             if ext == 0:
                 assert len(result) < 32
         
