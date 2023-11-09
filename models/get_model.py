@@ -54,8 +54,8 @@ def get_model(config: dict) -> object:
         KarpMd.vocab_size = config['vocab_size']
         return KarpathyTransformer(KarpMd)
     if config['model_name'] == "trans_karp_lg":
-        KarpMd.block_size = config['ctx_len']
-        KarpMd.vocab_size = config['vocab_size']
+        KarpLg.block_size = config['ctx_len']
+        KarpLg.vocab_size = config['vocab_size']
         return KarpathyTransformer(KarpLg)
     if config['model_name'] == 'trans_karp_sm_rot':
         KarpSm.block_size = config['ctx_len']
@@ -66,8 +66,8 @@ def get_model(config: dict) -> object:
         KarpMd.vocab_size = config['vocab_size']
         return KarpathyTransformerRot(KarpMd)
     if config['model_name'] == 'trans_karp_lg_rot':
-        KarpMd.block_size = config['ctx_len']
-        KarpMd.vocab_size = config['vocab_size']
+        KarpLg.block_size = config['ctx_len']
+        KarpLg.vocab_size = config['vocab_size']
         return KarpathyTransformerRot(KarpLg)
     if config['model_name'] == "rwkv_sm":
         class RWKVSm:
