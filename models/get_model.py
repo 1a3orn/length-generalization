@@ -7,7 +7,7 @@ class Karp:
     block_size: int = 0
     vocab_size: int = 0
     n_layer: int = -1
-    n_head: int = 4
+    n_head: int = 8
     n_embd: int = 1 * 256
     bias: bool = True # True: bias in Linears and LayerNorms, like GPT-2. False: a bit better and faster
 
