@@ -27,7 +27,7 @@ def train(task_str: str, model_str: str, args: argparse.Namespace):
             'device': args.device,
         }, extend=0)
 
-        result = model(x)
+        result = model(x.to(args.device))
 
         result_flat = result.view(-1, result.size(-1))
         loss_val = loss(result_flat, y.reshape(-1).long())
