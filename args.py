@@ -37,8 +37,10 @@ parser.add_argument(
 MODELS = [
     "trans_karp_sm",
     "trans_karp_md",
+    "trans_karp_lg",
     "trans_karp_sm_rot",
     "trans_karp_md_rot",
+    "trans_karp_lg_rot",
     "rwkv_sm",
     "rwkv_md",
     "rwkv_lg",

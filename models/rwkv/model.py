@@ -28,7 +28,7 @@ def __nop(ob):
 
 MyModule = nn.Module
 MyFunction = __nop
-if os.environ["RWKV_JIT_ON"] == "1":
+if "RWKV_JIT_ON" in os.environ and os.environ["RWKV_JIT_ON"] == "1":
     MyModule = torch.jit.ScriptModule
     MyFunction = torch.jit.script_method
 
@@ -37,12 +37,12 @@ if os.environ["RWKV_JIT_ON"] == "1":
 # CUDA Kernel
 ########################################################################################################
 
-T_MAX = int(os.environ["RWKV_T_MAX"])  # TAKES LOTS OF VRAM!
+T_MAX = 128 #int(os.environ["RWKV_T_MAX"])  # TAKES LOTS OF VRAM!
 # it's possible to go beyond CUDA limitations if you slice the ctx and pass the hidden state in each slice
 
 from torch.utils.cpp_extension import load
 
-if os.environ["RWKV_FLOAT_MODE"] == "bf16":
+if False and os.environ["RWKV_FLOAT_MODE"] == "bf16":
     wkv_cuda = load(name=f"wkv_{T_MAX}_bf16", sources=["./wkv_op_bf16.cpp", "./wkv_cuda_bf16.cu"], verbose=True, extra_cuda_cflags=["-t 4", "-std=c++17", "-res-usage", "--maxrregcount 60", "--use_fast_math", "-O3", "-Xptxas -O3", "--extra-device-vectorization", f"-DTmax={T_MAX}"])
     class WKV(torch.autograd.Function):
         @staticmethod
@@ -77,7 +77,7 @@ if os.environ["RWKV_FLOAT_MODE"] == "bf16":
             gu = torch.sum(gu, dim=0)
             return (None, None, None, gw, gu, gk, gv)
 else:
-    wkv_cuda = load(name=f"wkv_{T_MAX}", sources=["cuda/wkv_op.cpp", "cuda/wkv_cuda.cu"], verbose=True, extra_cuda_cflags=["-res-usage", "--maxrregcount 60", "--use_fast_math", "-O3", "-Xptxas -O3", "--extra-device-vectorization", f"-DTmax={T_MAX}"])
+    wkv_cuda = load(name=f"wkv_{T_MAX}", sources=["./wkv_op.cpp", "./wkv_cuda.cu"], verbose=True, extra_cuda_cflags=["-res-usage", "--maxrregcount 60", "--use_fast_math", "-O3", "-Xptxas -O3", "--extra-device-vectorization", f"-DTmax={T_MAX}"])
     class WKV(torch.autograd.Function):
         @staticmethod
         def forward(ctx, B, T, C, w, u, k, v):
