@@ -49,7 +49,8 @@ def train(task_str: str, model_str: str, args: argparse.Namespace):
         av_loss = logger.average("loss", 200)
         if steps % args.train_log_every == 0:
             print(f"Mdl: {model_str}, tsk: {task_str}, step: {steps}, loss: {av_loss}, train_acc: {av_acc}")
-            print(task.decode(end.view(-1)), task.decode(gen.view(-1)))
+            d = task.decode
+            print(d(start.view(-1)), d(end.view(-1)), d(gen.view(-1)))
         
         if av_acc is not None and av_acc > args.train_acc_stop:
             print(f"Reached {args.train_acc_stop} accuracy, stopping...")
