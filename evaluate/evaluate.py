@@ -14,6 +14,8 @@ def evaluate(model: any, task_str: str, model_str: str, args: argparse.Namespace
         for step in range(100):
 
             start, end = task.acc(extend=extend)
+            start = start.to(args.device)
+            end = end.to(args.device)
             gen = model.generate(start, len(end.view(-1)))
             test_acc = (gen == end).float().min().item()
             
