@@ -9,7 +9,7 @@ def evaluate(model: any, task_str: str, model_str: str, args: argparse.Namespace
     
     logger = Logger()
     task = get_task(task_str)
-    for extend in range(9):
+    for extend in range(8):
     
         for step in range(100):
 
@@ -25,7 +25,7 @@ def evaluate(model: any, task_str: str, model_str: str, args: argparse.Namespace
                 'test_acc': test_acc
             })
 
-            av_acc = logger.average("test_acc", 50)
+            av_acc = logger.average("test_acc", 100)
             if step % args.train_log_every == 0:
                 print(f"Extend {extend}: Step {step}, train_acc {av_acc}")
                 print(task.decode(end.view(-1)), task.decode(gen.view(-1)))

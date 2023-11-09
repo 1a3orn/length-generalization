@@ -43,8 +43,8 @@ def train(task_str: str, model_str: str, args: argparse.Namespace):
         logger.add({ 'step': steps, 'loss': loss_val.item(), 'train_acc': train_acc })
 
         steps += 1
-        av_acc = logger.average("train_acc", 200)
-        av_loss = logger.average("loss", 200)
+        av_acc = logger.average("train_acc", 400)
+        av_loss = logger.average("loss", 400)
         if steps % args.train_log_every == 0:
             print(f"Mdl: {model_str}, tsk: {task_str}, step: {steps}, loss: {av_loss}, train_acc: {av_acc}")
             print(task.decode(end.view(-1)), task.decode(gen.view(-1)))
