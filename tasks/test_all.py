@@ -29,12 +29,12 @@ tasks = [
     "sort_len",
     "sort_len_twodigit",
     "sort_missing",
-    "scramble_0",
-    "scramble_1",
-    "scramble_2",
 
     "parity_sum",
     "parity_count",
+    "scramble_0",
+    "scramble_1",
+    "scramble_2",
 ]
 
 def test():
@@ -57,7 +57,7 @@ def test():
             start_starts.append(result[0])
             start_ends.append(result[:start][-1])
             end_ends.append(result[start:end][-1])
-            if i == 0 or True:
+            if i == 0:
                 print(f"For extend = {ext}")
                 print("total ", result)
                 print("start ", len(result[:start]), result[:start])
