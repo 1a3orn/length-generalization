@@ -29,14 +29,14 @@ def get_model(config: dict) -> object:
             'num_layers': 2,
         })
     
-    if config['model_name'].startsWith("trans_karp_rot_"):
+    if config['model_name'].startswith("trans_karp_rot_"):
         Karp.block_size = config['ctx_len']
         Karp.vocab_size = config['vocab_size']
         n_layer = int(config['model_name'].split("_")[-1])
         Karp.n_layer = n_layer
         return KarpathyTransformerRot(Karp)
 
-    if config['model_name'].startsWith("trans_karp_"):
+    if config['model_name'].startswith("trans_karp_"):
         Karp.block_size = config['ctx_len']
         Karp.vocab_size = config['vocab_size']
         n_layer = int(config['model_name'].split("_")[-1])
