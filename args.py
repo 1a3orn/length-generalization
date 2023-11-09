@@ -43,6 +43,7 @@ MODELS = [
     "trans_karp_6",
     "trans_karp_7",
     "trans_karp_8",
+    "trans_karp_9",
     "trans_karp_sm_rot",
     "trans_karp_md_rot",
     "trans_karp_lg_rot",
