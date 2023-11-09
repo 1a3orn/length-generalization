@@ -2,7 +2,7 @@
 from models.trans import Transformer
 from models.karpathy_trans import GPT as KarpathyTransformer
 from models.karpathy_trans_rot import GPT as KarpathyTransformerRot
-from models.rwkv.model import RWKV
+#from models.rwkv.model import RWKV
 
 class KarpSm:
     block_size: int = 0
