@@ -77,7 +77,7 @@ if False and os.environ["RWKV_FLOAT_MODE"] == "bf16":
             gu = torch.sum(gu, dim=0)
             return (None, None, None, gw, gu, gk, gv)
 else:
-    wkv_cuda = load(name=f"wkv_{T_MAX}", sources=["./wkv_op.cpp", "./wkv_cuda.cu"], verbose=True, extra_cuda_cflags=["-res-usage", "--maxrregcount 60", "--use_fast_math", "-O3", "-Xptxas -O3", "--extra-device-vectorization", f"-DTmax={T_MAX}"])
+    wkv_cuda = load(name=f"wkv_{T_MAX}", sources=["models/rwkv/wkv_op.cpp", "models/rwkv/wkv_cuda.cu"], verbose=True, extra_cuda_cflags=["-res-usage", "--maxrregcount 60", "--use_fast_math", "-O3", "-Xptxas -O3", "--extra-device-vectorization", f"-DTmax={T_MAX}"])
     class WKV(torch.autograd.Function):
         @staticmethod
         def forward(ctx, B, T, C, w, u, k, v):
