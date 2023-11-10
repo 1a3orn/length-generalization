@@ -111,14 +111,15 @@ class Block(nn.Module):
         self.mlp = MLP(config)
 
     def forward(self, x):
+        per_head = self.config.n_embd // self.config.n_head
+        mult = self.iterations // 1000
+        cut = (mult + 1) * per_head
         if self.training:
             self.iterations += 1
         if self.iterations in [1000,2000,3000,4000]:
-            print("Switchit", self.iterations)
+            print("Switchit", self.iterations, cut)
         if self.iterations < 4000:
-            per_head = self.config.n_embd // self.config.n_head
-            mult = self.iterations // 1000
-            x[:, :, (mult + 1) * per_head:] = 0
+            x[:, :, :cut] = 0
 
         x = x + self.attn(self.ln_1(x))
         x = x + self.mlp(self.ln_2(x))
