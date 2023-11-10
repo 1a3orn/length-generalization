@@ -114,7 +114,7 @@ class Block(nn.Module):
     def forward(self, x):
         if self.training:
             self.iterations += 1
-        if self.iterations < 2000 and self.layer_num % 2 == 0:
+        if self.iterations < 1500 and self.layer_num < self.config.n_layer // 2 - 1:
             return x
 
         x = x + self.attn(self.ln_1(x))
