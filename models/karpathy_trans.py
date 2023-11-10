@@ -145,7 +145,7 @@ class GPT(nn.Module):
             h = nn.ModuleList([Block(config, _) for _ in range(config.n_layer)]),
             ln_f = LayerNorm(config.n_embd, bias=config.bias),
         ))
-        self.proj_up = nn.Linear(config.n_embd // 16, config.n_embd)
+        self.proj_up = nn.Linear(config.n_embd // 64, config.n_embd)
         self.lm_head = nn.Linear(config.n_embd, config.vocab_size, bias=False)
         # with weight tying when using torch.compile() some warnings get generated:
         # "UserWarning: functional_call was passed multiple values for tied weights.
