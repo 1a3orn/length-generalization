@@ -102,11 +102,8 @@ class MLP(nn.Module):
 
 class Block(nn.Module):
 
-    def __init__(self, config, layer_num):
+    def __init__(self, config):
         super().__init__()
-        self.iterations = 0
-        self.layer_num = layer_num
-        self.config = config
         # add a scalar parameter
         self.scalar = nn.Parameter(torch.tensor(0.0))
         self.ln_1 = LayerNorm(config.n_embd, bias=config.bias)
@@ -137,16 +134,15 @@ class GPT(nn.Module):
         assert config.block_size is not None
         self.config = config
         self.iterations = 0
+        self.n_layer = config.n_layer
 
         self.transformer = nn.ModuleDict(dict(
             wte = nn.Embedding(config.vocab_size, config.n_embd),
             wpe = nn.Embedding(config.block_size + 20, config.n_embd),
             #drop = nn.Dropout(config.dropout),
-            h = nn.ModuleList([Block(config, _) for _ in range(config.n_layer)]),
+            h = Block(config),
             ln_f = LayerNorm(config.n_embd, bias=config.bias),
         ))
-        torch.nn.init.uniform_(self.transformer.wte.weight, -0.0001, 0.0001)
-        torch.nn.init.uniform_(self.transformer.wpe.weight, -0.0001, 0.0001)
         self.lm_head = nn.Linear(config.n_embd, config.vocab_size, bias=False)
         # with weight tying when using torch.compile() some warnings get generated:
         # "UserWarning: functional_call was passed multiple values for tied weights.
