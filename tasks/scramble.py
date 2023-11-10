@@ -53,7 +53,12 @@ class Scramble(AbstractTask):
         rv_ass = assignments[rv]
         print_code = f"{rv}#{rv_ass}"
 
-        return f"S{initial_code}{sep}{reassign_code}{print_code}{''.join(init_r_vars)}E"
+        other_var_index = 1 - var_index
+        other_rand_var = random_vars[other_var_index]
+        rv_ass_2 = assignments[other_rand_var]
+        print_code_2 = f"{other_rand_var}{rv_ass_2}"
+
+        return f"S{initial_code}{sep}{reassign_code}{print_code}{print_code_2}E"
     
     def inner(self, extend=0):
         # doesn't use extend
