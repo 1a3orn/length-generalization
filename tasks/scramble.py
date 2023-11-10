@@ -19,7 +19,8 @@ class Scramble(AbstractTask):
         to_peel = list('abcdefghijklmnopqr')
         shuffle(to_peel)
         def peel():
-            return to_peel.pop()
+            char = to_peel.pop()
+            return char
         
         def rs():
             return "".join(["." for _ in range(randint(0, 3))])
@@ -31,6 +32,7 @@ class Scramble(AbstractTask):
 
         initial_code_lst = [ f"{var}={val}{rs()}" for var, val in assignments.items()]
         shuffle(initial_code_lst)
+        init_r_vars = [var[0] for var in initial_code_lst]
         initial_code = sep.join(initial_code_lst)
 
         # Generate reassignments
@@ -54,11 +56,11 @@ class Scramble(AbstractTask):
         rv_ass = assignments[rv]
         print_code = f"{rv}#{rv_ass}"
 
-        return f"S{initial_code}{sep}{reassign_code}{print_code}E"
+        return f"S{initial_code}{sep}{reassign_code}{print_code}{''.join(init_r_vars)}E"
     
     def inner(self, extend=0):
         # doesn't use extend
         leng = self.shuffles_base
         strng = self.at_len(leng)
         index = strng.index('#') + 1
-        return strng, index, 1 
+        return strng, index, 3 
