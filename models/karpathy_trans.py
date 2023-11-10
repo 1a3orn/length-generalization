@@ -114,13 +114,13 @@ class Block(nn.Module):
         self.mlp = MLP(config)
 
     def forward(self, x):
-        if self.iterations % 100 == 0 and self.training:
+        if self.iterations % 200 == 0 and self.training:
             print(f"Layer {self.layer_num} {self.scalar.item()}")
         if self.training:
             self.iterations += 1
-        if self.iterations < 1000 and self.layer_num > self.config.n_layer // 2 - 1:
+        if self.iterations < 1000 and self.layer_num % 2 == 0:
             return x
-        if self.iterations == 1000 and self.layer_num > self.config.n_layer // 2 - 1:
+        if self.iterations == 1000 and self.layer_num % 2 == 0:
             print("Layer", self.layer_num, "is now active, of ", self.config.n_layer, " total layers")
         y = x
         x = x + self.attn(self.ln_1(x))
