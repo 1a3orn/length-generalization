@@ -140,7 +140,7 @@ class GPT(nn.Module):
 
         self.transformer = nn.ModuleDict(dict(
             wte = nn.Embedding(config.vocab_size, config.n_embd // 16),
-            wpe = nn.Embedding(config.block_size + 20, config.n_embd // 16),
+            wpe = nn.Embedding(config.block_size, config.n_embd // 16),
             #drop = nn.Dropout(config.dropout),
             h = nn.ModuleList([Block(config, _) for _ in range(config.n_layer)]),
             ln_f = LayerNorm(config.n_embd, bias=config.bias),
@@ -195,6 +195,8 @@ class GPT(nn.Module):
         # forward the GPT model itself
         tok_emb = self.transformer.wte(idx) # token embeddings of shape (b, t, n_embd)
         pos_emb = self.transformer.wpe(pos) # position embeddings of shape (t, n_embd)
+        print("tok_emb: ", tok_emb.shape)
+        print("pos_emb: ", pos_emb.shape)
         x = tok_emb + pos_emb
 
         x = self.proj_up(x)
