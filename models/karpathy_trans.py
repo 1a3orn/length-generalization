@@ -139,12 +139,13 @@ class GPT(nn.Module):
         self.iterations = 0
 
         self.transformer = nn.ModuleDict(dict(
-            wte = nn.Embedding(config.vocab_size, config.n_embd),
-            wpe = nn.Embedding(config.block_size + 20, config.n_embd),
+            wte = nn.Embedding(config.vocab_size, config.n_embd // 16),
+            wpe = nn.Embedding(config.block_size + 20, config.n_embd // 16),
             #drop = nn.Dropout(config.dropout),
             h = nn.ModuleList([Block(config, _) for _ in range(config.n_layer)]),
             ln_f = LayerNorm(config.n_embd, bias=config.bias),
         ))
+        self.proj_up = nn.Linear(config.n_embd // 16, config.n_embd)
         torch.nn.init.uniform_(self.transformer.wte.weight, -0.0001, 0.0001)
         torch.nn.init.uniform_(self.transformer.wpe.weight, -0.0001, 0.0001)
         self.lm_head = nn.Linear(config.n_embd, config.vocab_size, bias=False)
@@ -188,14 +189,15 @@ class GPT(nn.Module):
         device = idx.device
         b, t = idx.size()
         assert t <= self.config.block_size, f"Cannot forward sequence of length {t}, block size is only {self.config.block_size}"
-        r = random.randint(0, 20)
-        pos = torch.arange(0 + r, t + r, dtype=torch.long, device=device) # shape (t)
+        
+        pos = torch.arange(0, t, dtype=torch.long, device=device) # shape (t)
 
         # forward the GPT model itself
         tok_emb = self.transformer.wte(idx) # token embeddings of shape (b, t, n_embd)
         pos_emb = self.transformer.wpe(pos) # position embeddings of shape (t, n_embd)
         x = tok_emb + pos_emb
-        # Zero out all but the 24 channels
+
+        x = self.proj_up(x)
             
         for block in self.transformer.h:
             x = block(x)
