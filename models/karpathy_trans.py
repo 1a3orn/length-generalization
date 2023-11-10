@@ -101,9 +101,10 @@ class MLP(nn.Module):
 
 class Block(nn.Module):
 
-    def __init__(self, config):
+    def __init__(self, config, layer_num):
         super().__init__()
         self.iterations = 0
+        self.layer_num = layer_num
         self.config = config
         self.ln_1 = LayerNorm(config.n_embd, bias=config.bias)
         self.attn = CausalSelfAttention(config)
@@ -111,15 +112,10 @@ class Block(nn.Module):
         self.mlp = MLP(config)
 
     def forward(self, x):
-        per_head = self.config.n_embd // self.config.n_head
-        mult = self.iterations // 1000
-        cut = (mult + 1) * per_head
         if self.training:
             self.iterations += 1
-        if self.iterations in [1000,2000,3000,4000]:
-            print("Switchit", self.iterations, cut)
-        if self.iterations < 4000:
-            x[:, :, :cut] = 0
+        if self.iterations < 2000 and self.layer_num % 2 == 0:
+            return x
 
         x = x + self.attn(self.ln_1(x))
         x = x + self.mlp(self.ln_2(x))
@@ -147,7 +143,7 @@ class GPT(nn.Module):
             wte = nn.Embedding(config.vocab_size, config.n_embd),
             wpe = nn.Embedding(config.block_size, config.n_embd),
             #drop = nn.Dropout(config.dropout),
-            h = nn.ModuleList([Block(config) for _ in range(config.n_layer)]),
+            h = nn.ModuleList([Block(config, _) for _ in range(config.n_layer)]),
             ln_f = LayerNorm(config.n_embd, bias=config.bias),
         ))
         self.lm_head = nn.Linear(config.n_embd, config.vocab_size, bias=False)
