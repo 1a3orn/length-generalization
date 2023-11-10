@@ -118,9 +118,9 @@ class Block(nn.Module):
             print(f"Layer {self.layer_num} {self.scalar.item()}")
         if self.training:
             self.iterations += 1
-        if self.iterations < 2000 and self.layer_num > self.config.n_layer // 2 - 1:
+        if self.iterations < 1000 and self.layer_num > self.config.n_layer // 2 - 1:
             return x
-        if self.iterations == 2000 and self.layer_num > self.config.n_layer // 2 - 1:
+        if self.iterations == 1000 and self.layer_num > self.config.n_layer // 2 - 1:
             print("Layer", self.layer_num, "is now active, of ", self.config.n_layer, " total layers")
         y = x
         x = x + self.attn(self.ln_1(x))
