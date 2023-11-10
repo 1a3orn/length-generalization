@@ -106,6 +106,8 @@ class Block(nn.Module):
         self.iterations = 0
         self.layer_num = layer_num
         self.config = config
+        # add a scalar parameter
+        self.scalar = nn.Parameter(torch.tensor(0.0))
         self.ln_1 = LayerNorm(config.n_embd, bias=config.bias)
         self.attn = CausalSelfAttention(config)
         self.ln_2 = LayerNorm(config.n_embd, bias=config.bias)
@@ -114,12 +116,12 @@ class Block(nn.Module):
     def forward(self, x):
         if self.training:
             self.iterations += 1
-        if self.iterations < 1000 and self.layer_num < self.config.n_layer // 2 + 2:
+        if self.iterations < 1000 and self.layer_num < self.config.n_layer // 2 + 1:
             return x
-
+        y = x
         x = x + self.attn(self.ln_1(x))
         x = x + self.mlp(self.ln_2(x))
-        return x
+        return x * self.scalar + y * (1 - self.scalar)
 
 @dataclass
 class GPTConfig:
