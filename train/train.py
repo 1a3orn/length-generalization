@@ -58,6 +58,7 @@ def train(task_str: str, model_str: str, args: argparse.Namespace):
         optimizer.step()
         optimizer.zero_grad()
 
+        model.eval()
         start, end = task.acc(extend=0)
         start = start.to(args.device)
         end = end.to(args.device)
