@@ -22,7 +22,8 @@ class Reverse(AbstractTask):
         if extend != 0 and extend is not None:
             start = self.ttb + extend
             end = self.ttb + extend
-        result = self.at_len(randint(start, end))
+        answer_length = randint(start, end)
+        result = self.at_len(answer_length)
         index = result.index('e') + 1
-        return result, index, len(result)
+        return result, index, answer_length
   

@@ -27,6 +27,8 @@ class CopyLenUnique(AbstractTask):
         if extend != 0 and extend is not None:
             start = self.ttb + extend
             end = self.ttb + extend
-        result = self.at_len(randint(start, end))
+        chosen_length = randint(start, end)
+        result = self.at_len(chosen_length)
         index = result.index('=') + 1
-        return result, index, len(result)
+        answer_length = len(result) - index - 1
+        return result, index, answer_length

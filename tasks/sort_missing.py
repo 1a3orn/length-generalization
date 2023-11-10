@@ -32,5 +32,6 @@ class SortMissing(AbstractTask):
             end = self.leng + extend
         result = self.seq(randint(start, end), train=extend==0)
         index = result.index('e') + 1
-        return result, index, len(result)
+        answer_length = len(result) - index - 1
+        return result, index, answer_length
   

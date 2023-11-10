@@ -7,12 +7,7 @@ if parent_dir not in sys.path:
 from tasks.get_task import get_task
 
 tasks = [
-
     "reverse",
-
-
-    "pattern_indices",
-    "pattern_repeats",
     "math_mult",
     "math_add",
     "math_mult_reverse",
@@ -21,20 +16,22 @@ tasks = [
     "copy_len_rep",
     "copy_len_unique",
     "balance_parens",
-
     "count",
     "mode",
     "mode_hard",
-
     "sort_len",
     "sort_len_twodigit",
     "sort_missing",
-
-    "parity_sum",
-    "parity_count",
     "scramble_0",
     "scramble_1",
     "scramble_2",
+    "pattern_indices",
+    "pattern_repeats",
+    "scramble_hard_0",
+    "scramble_hard_1",
+    "scramble_hard_2",
+    "parity_sum",
+    "parity_count",
 ]
 
 def test():
@@ -51,28 +48,36 @@ def test():
             res = task.inner(extend=ext)
 
             result = res[0]
-            start = res[1]
-            end = res[2]
+            answer_start = res[1]
+            answer_length = res[2]
             all_str += result
-            start_starts.append(result[0])
-            start_ends.append(result[:start][-1])
-            end_ends.append(result[start:end][-1])
+            start = result[:answer_start]
+            answer = result[answer_start:answer_start+answer_length]
+            start_starts.append(start[0])
+            start_ends.append(start[-1])
+            end_ends.append(result[-1])
             if i == 0:
                 print(f"For extend = {ext}")
                 print("total ", result)
-                print("start ", len(result[:start]), result[:start])
-                print("target ", len(result[start:end]), result[start:end])
+                print("start ", start)
+                print("target ", answer)
             if ext == 0:
-                assert len(result) < 36
+                assert len(result) < 32
+            if result[-2] != answer[-1]:
+                print(result)
+                print(answer)
+            assert result[-2] == answer[-1]
         
         # Check all start starts are same
         assert len(set(start_starts)) == 1
         assert start_starts[0] == 'S'
         # Check all start ends are same
         assert len(set(start_ends)) == 1
-        # Check all end ends are same
         assert len(set(end_ends)) == 1
-        assert end_ends[0] == 'E'
+        # Check all end ends are same
+
+        
+
 
 
         # Check all vocab is same

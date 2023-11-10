@@ -19,6 +19,7 @@ from tasks.count import Count
 from tasks.mode import Mode
 from tasks.mode_hard import ModeHard
 from tasks.scramble import Scramble
+from tasks.scramble_hard import ScrambleHard
 
 
 def get_task(task_name: str) -> object:
@@ -68,5 +69,11 @@ def get_task(task_name: str) -> object:
         return Scramble(2)
     elif task_name == "scramble_3":
         return Scramble(3)
+    elif task_name == "scramble_hard_0":
+        return ScrambleHard(0)
+    elif task_name == "scramble_hard_1":
+        return ScrambleHard(1)
+    elif task_name == "scramble_hard_2":
+        return ScrambleHard(2)
     else:
         raise ValueError(f"Unknown task: {task_name}")

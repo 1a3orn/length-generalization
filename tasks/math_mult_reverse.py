@@ -23,6 +23,7 @@ class MathMultReverse(AbstractTask):
             second_mult = randint(10 ** (extend + self.ttb - 1), 10 ** (extend + self.ttb))
         strng = self.at_len(first_mult, second_mult)
         index = strng.index('=') + 1
-        return strng, index, len(strng)
+        answer_length = len(strng) - index - 1
+        return strng, index, answer_length
 
   

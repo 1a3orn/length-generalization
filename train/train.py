@@ -73,9 +73,10 @@ def train(task_str: str, model_str: str, args: argparse.Namespace):
         if steps % args.train_log_every == 0:
             print(f"Mdl: {model_str}, tsk: {task_str}, step: {steps}, loss: {av_loss}, train_acc: {av_acc}")
             d = task.decode
-            print("Start: ", d(start.view(-1)))
-            print("End: ", d(end.view(-1)))
-            print("Gen: ", d(gen.view(-1)))
+            if steps % (args.train_log_every * 10) == 0:
+                print("Start: ", d(start.view(-1)))
+                print("End: ", d(end.view(-1)))
+                print("Gen: ", d(gen.view(-1)))
         
         if av_acc is not None and av_acc > args.train_acc_stop and steps > 1000:
             print(f"Reached {args.train_acc_stop} accuracy, stopping...")

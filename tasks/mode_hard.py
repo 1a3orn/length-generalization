@@ -35,4 +35,5 @@ class ModeHard(AbstractTask):
             length = self.ttb + extend
         result = self.at_len(length)
         index = result.index('=') + 1
-        return result, index, len(result)
+        answer_length = len(result) - index - 1
+        return result, index, answer_length

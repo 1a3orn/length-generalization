@@ -19,9 +19,10 @@ class PatternRepeats(AbstractTask):
         return f"S{vocab_str}.{repea_str}={output_str}E"
     
     def inner(self, extend=0):
-        leng = randint(2, 5)
+        leng = randint(3, 5)
         if extend != 0:
             leng = 5 + extend
         strng = self.at_len(leng)
         index = strng.index('=') + 1
-        return strng, index, len(strng)
+        answer_length = len(strng) - index - 1
+        return strng, index, answer_length

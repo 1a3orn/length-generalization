@@ -4,7 +4,7 @@ from tasks.abstract import AbstractTask
 def random_char_one(n):
     return "".join("abcdefghijklmnopqrs"[randint(0, 18)] for _ in range(n))
 
-class Scramble(AbstractTask):
+class ScrambleHard(AbstractTask):
 
     def __init__(self, shuffles_base=1):
         super().__init__()
@@ -53,11 +53,11 @@ class Scramble(AbstractTask):
         rv_ass = assignments[rv]
         print_code = f"{rv}#{rv_ass}"
 
-        return f"S{initial_code}{sep}{reassign_code}{print_code}{''.join(init_r_vars)}E"
+        return f"S{initial_code}{sep}{reassign_code}{print_code}E"
     
     def inner(self, extend=0):
         # doesn't use extend
         leng = self.shuffles_base
         strng = self.at_len(leng)
         index = strng.index('#') + 1
-        return strng, index, 3 
+        return strng, index, 1

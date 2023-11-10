@@ -29,6 +29,7 @@ class ParitySum(AbstractTask):
             end = self.ttb + extend
         result = self.at_len(randint(start, end))
         index = result.index('.') + 1
-        return result, index, len(result)
+        answer_length = len(result) - index - 1
+        return result, index, answer_length
 
   

@@ -25,4 +25,5 @@ class PatternIndices(AbstractTask):
             leng = 8 + extend
         strng = self.at_len(leng)
         index = strng.index('=') + 1
-        return strng, index, len(strng)
+        answer_length = len(strng) - index - 1
+        return strng, index, answer_length

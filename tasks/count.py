@@ -21,4 +21,5 @@ class Count(AbstractTask):
         start = randint(0, 99 - length)
         result = self.at_len(start, start + length)
         index = result.index('=') + 1
-        return result, index, len(result)
+        chosen_length = len(result) - index - 1
+        return result, index, chosen_length
