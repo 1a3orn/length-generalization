@@ -104,6 +104,7 @@ class Block(nn.Module):
     def __init__(self, config):
         super().__init__()
         self.iterations = 0
+        self.config = config
         self.ln_1 = LayerNorm(config.n_embd, bias=config.bias)
         self.attn = CausalSelfAttention(config)
         self.ln_2 = LayerNorm(config.n_embd, bias=config.bias)
@@ -112,12 +113,13 @@ class Block(nn.Module):
     def forward(self, x):
         if self.training:
             self.iterations += 1
-        if self.iterations == 1000 or self.iterations == 2000:
-            print("Switchit")
-        if self.iterations < 1000:
-            x[:, :, 24:] = 0
-        elif self.iterations < 2000:
-            x[:, :, 48:] = 0
+        if self.iterations in [1000,2000,3000,4000]:
+            print("Switchit", self.iterations)
+        if self.iterations < 4000:
+            per_head = self.config.n_embd // self.config.n_head
+            mult = self.iterations // 1000
+            x[:, :, (mult + 1) * per_head:] = 0
+
         x = x + self.attn(self.ln_1(x))
         x = x + self.mlp(self.ln_2(x))
         return x
