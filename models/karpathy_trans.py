@@ -145,6 +145,7 @@ class GPT(nn.Module):
         assert config.vocab_size is not None
         assert config.block_size is not None
         self.config = config
+        self.iterations = 0
 
         self.transformer = nn.ModuleDict(dict(
             wte = nn.Embedding(config.vocab_size, config.n_embd),
@@ -202,7 +203,12 @@ class GPT(nn.Module):
         pos_emb = self.transformer.wpe(pos) # position embeddings of shape (t, n_embd)
         x = tok_emb + pos_emb
         # Zero out all but the 24 channels
-        #x[:, :, 12:] = 0
+        if self.training:
+            self.iterations += 1
+        
+        if self.iterations < 3000:
+            x[:, :, :12] = 0
+            
         for block in self.transformer.h:
             x = block(x)
         x = self.transformer.ln_f(x)
