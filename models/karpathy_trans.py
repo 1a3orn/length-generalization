@@ -104,7 +104,6 @@ class Block(nn.Module):
 
     def __init__(self, config, layer_num):
         super().__init__()
-        self.iterations = 0
         self.layer_num = layer_num
         self.config = config
         # add a scalar parameter
@@ -115,18 +114,9 @@ class Block(nn.Module):
         self.mlp = MLP(config)
 
     def forward(self, x):
-        if self.iterations % 200 == 0 and self.training:
-            print(f"Layer {self.layer_num} {self.scalar.item()}")
-        if self.training:
-            self.iterations += 1
-        if self.iterations < 1000 and self.layer_num % 2 == 0:
-            return x
-        if self.iterations == 1000 and self.layer_num % 2 == 0:
-            print("Layer", self.layer_num, "is now active, of ", self.config.n_layer, " total layers")
-        y = x
         x = x + self.attn(self.ln_1(x))
         x = x + self.mlp(self.ln_2(x))
-        return x * self.scalar + y * (1 - self.scalar)
+        return x
 
 @dataclass
 class GPTConfig:
@@ -203,11 +193,6 @@ class GPT(nn.Module):
         pos_emb = self.transformer.wpe(pos) # position embeddings of shape (t, n_embd)
         x = tok_emb + pos_emb
         # Zero out all but the 24 channels
-        if self.training:
-            self.iterations += 1
-        
-        if self.iterations < 3000:
-            x[:, :, :12] = 0
             
         for block in self.transformer.h:
             x = block(x)
