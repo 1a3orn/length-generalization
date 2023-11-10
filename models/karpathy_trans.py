@@ -139,8 +139,8 @@ class GPT(nn.Module):
         self.iterations = 0
 
         self.transformer = nn.ModuleDict(dict(
-            wte = nn.Embedding(config.vocab_size, config.n_embd // 16),
-            wpe = nn.Embedding(config.block_size, config.n_embd // 16),
+            wte = nn.Embedding(config.vocab_size, config.n_embd // 64),
+            wpe = nn.Embedding(config.block_size, config.n_embd // 64),
             #drop = nn.Dropout(config.dropout),
             h = nn.ModuleList([Block(config, _) for _ in range(config.n_layer)]),
             ln_f = LayerNorm(config.n_embd, bias=config.bias),
