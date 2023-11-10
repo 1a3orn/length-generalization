@@ -31,7 +31,7 @@ class AbstractTask:
             ln_calc = len(strg) - start - 1
             assert ln_calc == ln
             res += strg
-            mask_to_add = [1] * start + [1] * ln + [1] 
+            mask_to_add = [0] * start + [1] * ln + [0] 
             mask += mask_to_add 
             mask += [0] * (len(strg) - len(mask_to_add) - 1)
         assert len(res) == len(mask)
