@@ -16,6 +16,7 @@ https://github.com/huggingface/transformers/blob/main/src/transformers/models/gp
 """
 
 import math
+import random
 import inspect
 from dataclasses import dataclass
 
@@ -147,7 +148,7 @@ class GPT(nn.Module):
 
         self.transformer = nn.ModuleDict(dict(
             wte = nn.Embedding(config.vocab_size, config.n_embd),
-            wpe = nn.Embedding(config.block_size, config.n_embd),
+            wpe = nn.Embedding(config.block_size + 20, config.n_embd),
             #drop = nn.Dropout(config.dropout),
             h = nn.ModuleList([Block(config, _) for _ in range(config.n_layer)]),
             ln_f = LayerNorm(config.n_embd, bias=config.bias),
@@ -193,7 +194,8 @@ class GPT(nn.Module):
         device = idx.device
         b, t = idx.size()
         assert t <= self.config.block_size, f"Cannot forward sequence of length {t}, block size is only {self.config.block_size}"
-        pos = torch.arange(0, t, dtype=torch.long, device=device) # shape (t)
+        r = random.randint(0, 20)
+        pos = torch.arange(0 + r, t + r, dtype=torch.long, device=device) # shape (t)
 
         # forward the GPT model itself
         tok_emb = self.transformer.wte(idx) # token embeddings of shape (b, t, n_embd)
