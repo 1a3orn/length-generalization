@@ -28,6 +28,8 @@ class AbstractTask:
         mask = []
         while len(res) < ctx_len:
             strg, start, ln = self.inner(extend=extend)
+            ln_calc = len(strg) - start - 1
+            assert ln_calc == ln
             res += strg
             mask_to_add = [0] * start + [1] * ln + [0] 
             mask += mask_to_add 
@@ -48,6 +50,8 @@ class AbstractTask:
     
     def acc(self, extend=0):
         strg, start, leng_answer = self.inner(extend=extend)
+        lng_ctx = len(strg) - start - 1
+        assert leng_answer == lng_ctx
         strg_start = torch.tensor(self.encode(strg[:start])).unsqueeze(0)
         strg_end = torch.tensor(self.encode(strg[start:start+leng_answer])).unsqueeze(0)
         return strg_start, strg_end
