@@ -103,12 +103,21 @@ class Block(nn.Module):
 
     def __init__(self, config):
         super().__init__()
+        self.iterations = 0
         self.ln_1 = LayerNorm(config.n_embd, bias=config.bias)
         self.attn = CausalSelfAttention(config)
         self.ln_2 = LayerNorm(config.n_embd, bias=config.bias)
         self.mlp = MLP(config)
 
     def forward(self, x):
+        if self.training:
+            self.iterations += 1
+        if self.iterations == 1000 or self.iterations == 2000:
+            print("Switchit")
+        if self.iterations < 1000:
+            x[:, :, 24:] = 0
+        elif self.iterations < 2000:
+            x[:, :, 48:] = 0
         x = x + self.attn(self.ln_1(x))
         x = x + self.mlp(self.ln_2(x))
         return x
@@ -186,7 +195,7 @@ class GPT(nn.Module):
         pos_emb = self.transformer.wpe(pos) # position embeddings of shape (t, n_embd)
         x = tok_emb + pos_emb
         # Zero out all but the 24 channels
-        x[:, :, 12:] = 0
+        #x[:, :, 12:] = 0
         for block in self.transformer.h:
             x = block(x)
         x = self.transformer.ln_f(x)

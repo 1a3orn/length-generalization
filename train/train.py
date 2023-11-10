@@ -21,6 +21,7 @@ def train(task_str: str, model_str: str, args: argparse.Namespace):
     
     steps = 0
     while steps < args.train_max_steps:
+        model.train()
         x, y, y_mask = task.batch({
             'batch_size': args.train_batch_size,
             'ctx_len': args.train_ctx_len,
