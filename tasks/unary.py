@@ -83,3 +83,6 @@ UNARY_TASKS = [
      #('double_other', double_other),
     #('sort', sort),
 ]
+
+if __name__ == "__main__":
+    print(",".join(list(map(lambda x: "unary_" + x[0], UNARY_TASKS))))
