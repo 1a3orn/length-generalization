@@ -10,6 +10,7 @@ def rot13(text):
         text = "".join(text)
     return [
         half_alpha[(half_alpha.index(c) + 13) % 13] if c in half_alpha else c
+        for c in text
     ]
 
 def unique(text):
