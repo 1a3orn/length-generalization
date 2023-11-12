@@ -8,7 +8,7 @@ IN_KEY = {
 
 alpha = list("abcdefghijklmnopqrstuvwxyz")
 def rand_str(leng):
-    return "".join([alpha[randint(0, 25)] for _ in range(leng)])
+    return join([alpha[randint(0, 25)] for _ in range(leng)])
 
 class Unary(AbstractTask):
 
