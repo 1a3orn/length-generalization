@@ -36,7 +36,7 @@ class Unary(AbstractTask):
     def at_len(self, leng: int) -> list:
         seq_scrambled = rand_str(leng)
         seq = ['S'] + seq_scrambled + ['=']
-        seq = seq + self.transform(seq_scrambled) + ['E']
+        seq = seq + list(self.transform(seq_scrambled)) + ['E']
         return "".join(seq)
 
     def inner(self, extend = 0):
