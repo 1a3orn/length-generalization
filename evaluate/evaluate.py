@@ -30,7 +30,7 @@ def evaluate(model: any, task_str: str, model_str: str, args: argparse.Namespace
             av_acc = logger.average("test_acc", 100)
             if step % args.train_log_every == 0:
                 print(f"Extend {extend}: Step {step}, train_acc {av_acc}")
-                print(task.decode(end.view(-1)), task.decode(gen.view(-1)))
+                #print(task.decode(end.view(-1)), task.decode(gen.view(-1)))
 
     
     logger.write(os.path.join(args.folder, f"test_{task_str}_{model_str}.csv"))
