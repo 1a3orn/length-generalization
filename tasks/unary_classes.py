@@ -40,7 +40,7 @@ class Unary(AbstractTask):
         return "".join(seq)
 
     def inner(self, extend = 0):
-        start = 4
+        start = 6
         end = self.ttb
         if extend != 0 and extend is not None:
             start = self.ttb + extend
