@@ -8,7 +8,9 @@ def rot13(text):
         string.ascii_lowercase[13:] + string.ascii_lowercase[:13] +
         string.ascii_uppercase[13:] + string.ascii_uppercase[:13]
     )
-    return text.translate(rot13_trans)
+    if not isinstance(text, str):
+        text = "".join(text)
+    return list(text.translate(rot13_trans))
 
 def unique(text):
     ret = ""
@@ -16,9 +18,6 @@ def unique(text):
         if c not in ret:
             ret += c
     return ret
-
-def sort(text):
-    return "".join(sorted(text))
 
 def swap_alt(text):
     ret = ""
