@@ -5,14 +5,12 @@ half_alphabet = list("abcdefghijklm")
 
 def rot13(text):
     # Define the ROT13 translation table
-    rot13_trans = str.maketrans(
-        string.ascii_lowercase + string.ascii_uppercase,
-        string.ascii_lowercase[13:] + string.ascii_lowercase[:13] +
-        string.ascii_uppercase[13:] + string.ascii_uppercase[:13]
-    )
+    half_alpha = list("abcdefghijklm")
     if not isinstance(text, str):
         text = "".join(text)
-    return list(text.translate(rot13_trans))
+    return [
+        half_alpha[(half_alpha.index(c) + 13) % 13] if c in half_alpha else c
+    ]
 
 def unique(text):
     ret = ""
