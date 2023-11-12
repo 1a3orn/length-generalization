@@ -1,6 +1,8 @@
 
 import string
 
+half_alphabet = list("abcdefghijklm")
+
 def rot13(text):
     # Define the ROT13 translation table
     rot13_trans = str.maketrans(
@@ -46,7 +48,7 @@ def double_other(text):
 
 def back_by_index_mod(text, mod_amount):
     ret = ""
-    indices = list("abcdefghijklmnopqrstuvwxyz")
+    indices = half_alphabet
     for i, c in enumerate(text):
         if c not in indices:
             ret += c
@@ -59,7 +61,7 @@ def back_by_index_mod(text, mod_amount):
 
 def chunk_parity(text, chunk_size=2):
     ret = ""
-    indices = list("abcdefghijklmnopqrstuvwxyz")
+    indices = half_alphabet
     for i in range(0, len(text), chunk_size):
         chunk_chars = text[i:i + chunk_size]
         if not all([c in indices for c in chunk_chars]):

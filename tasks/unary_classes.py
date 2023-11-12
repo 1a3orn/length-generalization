@@ -7,6 +7,7 @@ IN_KEY = {
 }
 
 alpha = list("abcdefghijklmnopqrstuvwxyz")
+half_alpha = list("abcdefghijklm")
 def rand_str(leng):
     return [alpha[randint(0, 25)] for _ in range(leng)]
 
@@ -31,7 +32,7 @@ class Unary(AbstractTask):
             self.transform = fnc
 
     def vocab(self):
-        return ['S', 'E', '='] + alpha
+        return ['S', 'E', '='] + half_alpha
     
     def at_len(self, leng: int) -> list:
         seq_scrambled = rand_str(leng)
