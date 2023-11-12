@@ -20,6 +20,7 @@ from tasks.mode import Mode
 from tasks.mode_hard import ModeHard
 from tasks.scramble import Scramble
 from tasks.scramble_hard import ScrambleHard
+from tasks.unary_classes import Unary
 
 
 def get_task(task_name: str) -> object:
@@ -75,5 +76,11 @@ def get_task(task_name: str) -> object:
         return ScrambleHard(1)
     elif task_name == "scramble_hard_2":
         return ScrambleHard(2)
+    elif task_name.startswith("unary"):
+        to_split = task_name[5:]
+        print("Trying to make unary task with", to_split)
+        split = to_split.split("X")
+        return Unary(keys=split)
+
     else:
         raise ValueError(f"Unknown task: {task_name}")
