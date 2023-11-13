@@ -77,7 +77,7 @@ def get_task(task_name: str) -> object:
     elif task_name == "scramble_hard_2":
         return ScrambleHard(2)
     elif task_name.startswith("unary_"):
-        to_split = task_name[6:]
+        to_split = task_name
         print("Trying to make unary task with", to_split)
         split = [ x[6:] for x in to_split.split("X") ]
         return Unary(keys=split)
