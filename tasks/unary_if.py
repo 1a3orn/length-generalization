@@ -33,12 +33,12 @@ def first_two_characters_sorted(text):
     return text[:2] == "".join(sorted(text[:2]))
 
 UNARY_COND_OP = [
-    ('starts_with_half_alpha', starts_with_half_alpha),
-    ('ends_with_half_alpha', ends_with_half_alpha),
+    ('start_half', starts_with_half_alpha),
+    ('end_half', ends_with_half_alpha),
     ('odd_length', odd_length),
-    ('has_repeating_elements', has_repeating_elements),
-    ('contains_incrementing', contains_incrementing),
-    ('first_two_characters_sorted', first_two_characters_sorted),
+    ('rep_ele', has_repeating_elements),
+    ('incre', contains_incrementing),
+    ('first_two', first_two_characters_sorted),
 ]
 
 UNARY_TRANS_OP = [
