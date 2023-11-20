@@ -9,9 +9,9 @@ def evaluate(model: any, task_str: str, model_str: str, args: argparse.Namespace
     
     logger = Logger()
     task = get_task(task_str)
-    for extend in range(8):
+    for extend in range(3):
     
-        for step in range(100):
+        for step in range(150):
 
             start, end = task.acc(extend=extend)
             start = start.to(args.device)
