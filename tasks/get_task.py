@@ -25,7 +25,7 @@ from tasks.unary_if_classes import UnaryIf
 
 
 def get_task(task_name: str) -> object:
-    task_name = task_name.trim()
+    task_name = task_name.strip()
     if task_name == "count":
         return Count()
     elif task_name == "mode":
