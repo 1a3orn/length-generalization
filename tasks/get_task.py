@@ -22,6 +22,7 @@ from tasks.scramble import Scramble
 from tasks.scramble_hard import ScrambleHard
 from tasks.unary_classes import Unary
 from tasks.unary_if_classes import UnaryIf
+from tasks.condense_classes import Condense
 
 
 def get_task(task_name: str) -> object:
@@ -87,7 +88,9 @@ def get_task(task_name: str) -> object:
         to_split = task_name
         split = [ x[6:] for x in to_split.split("X") ]
         return Unary(keys=split)
-    
+    elif task_name.startswith("cond_"):
+        tn = task_name[5:]
+        return Condense(tn) 
 
     else:
         raise ValueError(f"Unknown task: {task_name}")
