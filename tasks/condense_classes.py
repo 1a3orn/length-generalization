@@ -15,7 +15,7 @@ class Condense(AbstractTask):
 
         keys = []
         for composite_str in split_pipe:
-            keys_inner = composite_str.split(",")
+            keys_inner = composite_str.split(":")
             for key in keys_inner:
                 if key not in CONDENSE_OPS_KEYS:
                     raise ValueError(f"key {key} not found in {CONDENSE_OPS_KEYS}")
