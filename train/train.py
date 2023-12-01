@@ -76,7 +76,7 @@ def train(
 
         logger_props = {
             'train_task': task_str,
-            'test_task': task_str,
+            'test_task': test_str,
             'step': steps,
             'train_loss': loss_val.item(),
             'test_acc': test_acc
