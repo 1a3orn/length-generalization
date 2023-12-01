@@ -62,7 +62,7 @@ def condense_tests():
     composited(['mod', 'hig'])
     composited(['bef', 'hig', 'ind'])
 
-    c = Condense("hig|ind|hig,ind")
+    c = Condense("mod:hig")
     print(c.vocab())
     print(c.at_len(10))
     b = c.batch({'batch_size': 2, 'ctx_len': 64, 'device': 'cpu'})

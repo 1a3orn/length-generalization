@@ -101,7 +101,9 @@ def composited(
                     "output": output
                 }
 
-        return inner(stack, len(ops))
+        a = inner(stack, len(ops))
+        print(a)
+        return a
     
     return get_output(ops, make_stk(len(ops)))
     
