@@ -87,7 +87,7 @@ def train(
 
         steps += 1
         av_acc = logger.average("test_acc", args.av_over_steps)
-        av_loss = logger.average("loss", args.av_over_steps)
+        av_loss = logger.average("train_loss", args.av_over_steps)
         if steps % args.train_log_every == 0:
             print(f"Mdl: {model_str}, tsk: {task_str}, step: {steps}, loss: {av_loss}, test_acc: {av_acc}")
             d = task.decode
