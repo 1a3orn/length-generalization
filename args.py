@@ -15,7 +15,7 @@ parser.add_argument("--train_lr", type=float, default=0.0005)
 parser.add_argument("--av_over_steps", type=int, default=100)
 
 parser.add_argument("--tasks", help="Mode of operation.", type="str")
-parser.add_argument("--tasks_test", help="What you test on", type=str)
+parser.add_argument("--tasks_test", help="What you test on", type="str")
 parser.add_argument("--models", help="Models to run.", default="trans_karp_8")
 
 def get_args():
